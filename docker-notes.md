@@ -36,6 +36,7 @@ docker run -d -p 80:80 --name docker-tutorial docker101tutorial
 Flags | Meaning
 --- | ---
 `-d` | Also known as `--detach`, this run the container in the background ("detached mode") and prints the container's ID
+`-p` | Also known as `--publish`, this publishes a container's port(s) to the host.
 
 > Running a container launches your application with private resources, securely
 > isolated from the rest of your machine.
@@ -63,6 +64,10 @@ The getting started command:
 ```zsh
 docker run -d -p 4000:80 docker/getting-started
 ```
+
+In this case, port `80` of the container is bound to port `4000` on the host machine.
+This means that port `80` in the container can be seen/exposed on `localhost:4000` on
+my machine.
 
 Check what is using port 80:
 
