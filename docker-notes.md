@@ -36,10 +36,18 @@ docker run -d -p 80:80 --name docker-tutorial docker101tutorial
 Flags | Meaning
 --- | ---
 `-d` | Also known as `--detach`, this run the container in the background ("detached mode") and prints the container's ID
-`-p` | Also known as `--publish`, this publishes a container's port(s) to the host.
+`-p` | Also known as `--publish`, this publishes a container's port(s) to the host
+`--name` | Assigns a name to the container. In this case, it's "docker-tutorial"
+`dockertutorial` | `docker run` creates a writeable container layer over this image
 
 > Running a container launches your application with private resources, securely
 > isolated from the rest of your machine.
+
+To list all containers, you can run:
+
+```zsh
+docker ps -a
+```
 
 ### Step 4a
 
@@ -85,6 +93,7 @@ sudo lsof -i -P -n | grep 80
 docker images -a
 docker image ls
 docker container ls
+docker ps -a
 ```
 
 Remove all images:
