@@ -1,6 +1,12 @@
 # Docker Notes
 
-## Gettings Started Tutorial Notes
+## Table of Contents
+
+- [Getting Started Tutorial](#getting-started-tutorial-notes)
+- [Terminology](#terminology)
+- [Useful Commands](#useful-commands)
+
+## Getting Started Tutorial Notes
 
 ### Step 1
 
@@ -57,6 +63,14 @@ Tag the Docker image:
 docker tag docker101tutorial aztechdev/docker101tutorial
 ```
 
+```zsh
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+```
+
+> Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+> You can group your images together using names and tags, and then upload them
+> to [Share images on Docker Hub](https://docs.docker.com/get-started/part3/).
+
 ### Step 4b
 
 Share the image to Docker Hub:
@@ -64,6 +78,32 @@ Share the image to Docker Hub:
 ```zsh
 docker push aztechdev/docker101tutorial
 ```
+
+```zsh
+docker push [OPTIONS] NAME[:TAG]
+```
+
+> Push an image or a repository to a registry
+
+## Terminology
+
+### What is a Container
+
+A **container** is another process on your machine that has been isolated from all
+other processes on the host machine. That isolation leverages
+[kernel namespaces and cgroups](https://medium.com/@saschagrunert/demystifying-containers-part-i-kernel-space-2c53d6979504),
+features that have been in Linux for a long time.
+
+[Deep Dive Video - Creating Containers from Scratch](https://youtu.be/8fi7uSYlOdc)
+
+### What is a Container Image
+
+When running a container, it uses an isolated filesystem. This custom filesystem
+is provided by a **container image**. Since the image contains the container's
+filesystem, it must contain everything needed to run an application - all
+dependencies, configuration, scripts, binaries, etc. The image also contains
+other configuration for the container, such as environment variables, a default
+command to run, and other metadata.
 
 ## Useful Commands
 
