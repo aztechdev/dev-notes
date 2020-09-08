@@ -4,6 +4,16 @@ Notes are created based off of the [Node.js learning site](https://nodejs.dev/le
 
 Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
 
+Useful Links | Description
+--- | ---
+[Node.js API Documentation](https://nodejs.org/api/) | Index of Node.js API docs
+[HTTP Response Code - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) | Docs on status codes on MDN
+[httpstatuses.com](https://httpstatuses.com/) | Another response code index
+[HTTP Headers - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) | Reference list of HTTP headers
+[MIME/Media Types - IANA][mime-types] | List of valid media types for a resource
+[EcmaScript Modules - Node](https://nodejs.org/api/esm.html) | Docs on ESM
+[nvm](https://github.com/nvm-sh/nvm) | Node Version Manager
+
 ## Introduction to Node.js
 
 **Q: What is Node?**
@@ -53,7 +63,32 @@ PORT=2020 node example-server.js
 ```
 
 The code above includes the [http module](https://nodejs.org/api/http.html),
-which is used to create an HTTP server using `http.createServer(requestListener)`
-(where `requestListener` is a function). The server listens on a specified
-hostname and port. When the server is ready, the `requestListener` callback
-function is called.
+which is used to create an HTTP server [using `http.createServer(requestListener)`](https://nodejs.org/api/http.html#http_http_createserver_options_requestlistener)
+(where `requestListener` is a function).
+
+> Note: the `requestListener` is a function which is automatically added to [the `request` event][request-event].
+
+By [calling `server.listen(port, host, callback)`](https://nodejs.org/api/net.html#net_server_listen_port_host_backlog_callback),
+the server listens on a specified hostname and port. When the server is ready,
+the `callback` function is called.
+
+When a request is received, [the `request` event][request-event] is emitted and provides two objects:
+
+1. a request ([an `http.IncomingMessage` object](https://nodejs.org/api/http.html#http_class_http_incomingmessage))
+2. a response ([an `http.ServerResponse` object](https://nodejs.org/api/http.html#http_class_http_serverresponse))
+
+The `request` provides request details, like the request headers and request data.
+The `response` is used to return data to the caller. In the example above, we
+return status code `200` ("OK"), which means the request has succeeded. The Content-Type
+header is used to indicate the media type of the resource. In the example, we are
+returning plain text.
+
+The `res.end(data)` method signals to the server that all of the response headers
+and body have been sent; that server should consider this message complete.
+If data is specified, it is similar in effect to calling `response.write(data, encoding)` followed by `response.end(callback)`.
+
+> Note: The `response.end()` method **MUST** be called on each response.
+
+<!-- Links -->
+[request-event]: https://nodejs.org/api/http.html#http_event_request
+[mime-types]: https://www.iana.org/assignments/media-types/media-types.xhtml
