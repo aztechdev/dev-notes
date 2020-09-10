@@ -11,8 +11,9 @@ Useful Links | Description
 [httpstatuses.com](https://httpstatuses.com/) | Another response code index
 [HTTP Headers - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) | Reference list of HTTP headers
 [MIME/Media Types - IANA][mime-types] | List of valid media types for a resource
-[EcmaScript Modules - Node](https://nodejs.org/api/esm.html) | Docs on ESM
+[ECMAScript Modules - Node](https://nodejs.org/api/esm.html) | Docs on ESM
 [nvm](https://github.com/nvm-sh/nvm) | Node Version Manager
+[ECMA-262 standard](https://www.ecma-international.org/publications/standards/Ecma-262.htm) | ECMAScript Language Specification
 
 ## Introduction to Node.js
 
@@ -26,6 +27,7 @@ A: We can write server-side and client-side code without the need to learn a
 different language. There are some additional stats:
 
 - Runs the [V8 JavaScript engine](https://v8.dev/) (Google Chrome), outside of the browser.
+  - JavaScript is internally compiled by V8 with [just-in-time (JIT) compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation) to speed up the execution.
 - Node is run in a single process, without creating a new thread for every request.
 - Provides a set of asynchronous I/O primitives in its standard library that prevent
 JavaScript code from blocking the thread. This allows Node.js to handle thousands of
@@ -34,6 +36,12 @@ managing thread concurrency.
 - [Article: How to write asynchronous code](https://nodejs.org/en/knowledge/getting-started/control-flow/how-to-write-asynchronous-code/)
 
 > Note: there is more information on asynchronous code in the [Modern Asynchronous JavaScript with Async and Await](https://nodejs.dev/learn/modern-asynchronous-javascript-with-async-and-await) section.
+
+### Differences Between the Browser and Node.js
+
+Browser | Node.js
+--- | ---
+Interacting with the DOM, `document`, `window`, Cookies, using Babel to transpile client code to be ES5-compatible, ES modules standard being adopted (`import`). | Node.js modules, control over the environment (any ES version), uses CommonJS module system (`require`).
 
 ### An Example Node.js Application
 
@@ -92,3 +100,5 @@ If data is specified, it is similar in effect to calling `response.write(data, e
 <!-- Links -->
 [request-event]: https://nodejs.org/api/http.html#http_event_request
 [mime-types]: https://www.iana.org/assignments/media-types/media-types.xhtml
+
+<!-- ## How to Exit From a Node.js Program -->
