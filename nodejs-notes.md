@@ -11,6 +11,8 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
   - [An Example Node.js Application](#an-example-nodejs-application)
 - [How to Exit From a Node.js Program Programmatically](#how-to-exit-from-a-nodejs-program-programmatically)
 - [How to Read Environment Variables From Node.js](#how-to-read-environment-variables-from-nodejs)
+  - [NODE_ENV](#node_env)
+- [The Node.js REPL](#the-nodejs-repl)
 
 Useful Links | Description
 --- | ---
@@ -146,7 +148,7 @@ It's possible to send this signal from inside the program, or another program
 process.kill(process.pid, 'SIGTERM')
 ```
 
-> Note: for mor information on these signals, check out [the Linux manual on signals](https://man7.org/linux/man-pages/man7/signal.7.html)
+> Note: for more information on these signals, check out [the Linux manual on signals](https://man7.org/linux/man-pages/man7/signal.7.html)
 
 ## How to Read Environment Variables From Node.js
 
@@ -193,3 +195,37 @@ NODE_EN=development
 This value is used (by convention) to state whether a particular environment is `production` or `development`.
 A Node.js application often uses this value to allow different options based on the environment.
 For example, we could turn on additional logging in the `development` environment that would otherwise be disabled in production.
+
+## The Node.js REPL
+
+> REPL stands for [Read-eval-print loop](https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop), and is sometimes called a _language shell_
+
+The Node.js REPL takes a single expression (read), executes it (eval) and returns the result to the console (print). A simple test is to log something:
+
+```zsh
+❯ node
+Welcome to Node.js v12.16.1.
+Type ".help" for more information.
+> console.log('test')
+test
+undefined
+>
+```
+
+> Random Note: if you type `_` and hit `enter`, the result of the last operation will be printed
+
+The `undefined` after `test` is the return value of `console.log()`, because the method does not return anything.
+
+It also possible to use `tab` for autocomplete. This is useful for exploring the properties and methods of JavaScript classes (_e.g._ `Array`, type `Array.` then `tab`) and Node.js globals (type `global.` and press `tab`).
+
+**Dot Command** | **Description**
+--- | ---
+`.help` | gives information on the commands below
+`.editor` | enables editor mode, to write multiline JavaScript code with ease. Once you are in this mode, enter ctrl-D to run the code you wrote.
+`.break` | when inputting a multi-line expression, entering the .break command will abort further input. Same as pressing ctrl-C.
+`.clear` | resets the REPL context to an empty object and clears any multi-line expression currently being input.
+`.load` | loads a JavaScript file, relative to the current working directory
+`.save` | saves all you entered in the REPL session to a file (specify the filename)
+`.exit` | exits the repl (same as pressing ctrl-C two times)
+
+## Using Command Line Arguments
