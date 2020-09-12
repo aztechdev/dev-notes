@@ -13,12 +13,15 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
 - [How to Read Environment Variables From Node.js](#how-to-read-environment-variables-from-nodejs)
   - [NODE_ENV](#node_env)
 - [The Node.js REPL](#the-nodejs-repl)
+- [Using Command Line Arguments](#using-command-line-arguments)
+<!-- - [Output to the Command Line](#output-to-the-command-line) -->
 
 Useful Links | Description
 --- | ---
 [Node.js API Documentation](https://nodejs.org/api/) | Index of Node.js API docs
 [Node.js Globals](https://nodejs.org/api/globals.html) | Always available to Node.js applications without using `require()`
 [JS Global Objects - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects) | Standard built-in objects in the global scope
+[Web APIs - MDN](https://developer.mozilla.org/en-US/docs/Web/API) | List of Web APIs (_e.g._ DOM, History API, Storage, WebGL)
 [HTTP Response Code - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) | Docs on status codes on MDN
 [httpstatuses.com](https://httpstatuses.com/) | Another response code index
 [HTTP Headers - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) | Reference list of HTTP headers
@@ -174,7 +177,7 @@ An example of this object looks like:
 > Note: many of these values come from [`environ` in Linux](https://man7.org/linux/man-pages/man7/environ.7.html)
 
 A common way to manage multiple environment variables (based on different config files)
-is to use the [dotenv](https://github.com/motdotla/dotenv) package. This is included using:
+is to use the [dotenv](https://github.com/motdotla/dotenv) package. After installing the module, this is included using:
 
 ```js
 require('dotenv').config()
@@ -229,3 +232,29 @@ It also possible to use `tab` for autocomplete. This is useful for exploring the
 `.exit` | exits the repl (same as pressing ctrl-C two times)
 
 ## Using Command Line Arguments
+
+You can pass arguments on the command line by adding them after the script:
+
+```zsh
+node app.js one two three four
+```
+
+The [`process` core module](https://nodejs.org/api/process.html) has the
+[`argv` property](https://nodejs.org/api/process.html#process_process_argv),
+which is an array of command line arguments.
+
+The first element will be [process.execPath](https://nodejs.org/api/process.html#process_process_execpath).
+The second element will be the path to the JavaScript file being executed.
+The remaining elements will be any additional command line arguments.
+
+You can print all of your command line arguments with:
+
+```js
+process.argv.forEach((val, index) => {
+  console.log(`${index}: ${val}`);
+});
+// You could get only the additional arguments with the following:
+const args = process.argv.slice(2);
+```
+
+## Output to the Command Line
