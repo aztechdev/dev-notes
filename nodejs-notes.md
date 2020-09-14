@@ -14,10 +14,12 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
   - [NODE_ENV](#node_env)
 - [The Node.js REPL](#the-nodejs-repl)
 - [Using Command Line Arguments](#using-command-line-arguments)
+- [Making the Command Line Interactive](#making-the-command-line-interactive)
 - [Output to the Command Line](#output-to-the-command-line)
   - [Formatting](#formatting)
   - [Debugging](#debugging)
   - [Other Uses](#other-uses)
+<!-- - [Modules](#modules) -->
 
 Useful Links | Description
 --- | ---
@@ -260,6 +262,30 @@ process.argv.forEach((val, index) => {
 const args = process.argv.slice(2);
 ```
 
+## Making the Command Line Interactive
+
+The [`readline` module](https://nodejs.org/api/readline.html) provides an interface
+for reading data from a [Readable stream](https://nodejs.org/api/stream.html#stream_readable_streams)
+(_e.g._ `process.stdin`) one line at a time:
+
+```js
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question('What do you think of Node.js? ', (answer) => {
+  // Do something with the answer
+  console.log(`Thank you for your valuable feedback: ${answer}`);
+  rl.close();
+});
+```
+
+> There are 3rd party packages that provide some additional functionality, like
+> [readline-sync](https://github.com/anseki/readline-sync) and [Inquirer.js](https://github.com/SBoudrias/Inquirer.js)
+
 ## Output to the Command Line
 
 Node has a [global `console`](https://nodejs.org/api/console.html) instance that
@@ -333,3 +359,5 @@ console.count('How many times?');
 console.count('How many times?');
 // How many times?: 3
 ```
+
+<!-- ## Modules -->
