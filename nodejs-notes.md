@@ -14,7 +14,10 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
   - [NODE_ENV](#node_env)
 - [The Node.js REPL](#the-nodejs-repl)
 - [Using Command Line Arguments](#using-command-line-arguments)
-<!-- - [Output to the Command Line](#output-to-the-command-line) -->
+- [Output to the Command Line](#output-to-the-command-line)
+  - [Formatting](#formatting)
+  - [Debugging](#debugging)
+  - [Other Uses](#other-uses)
 
 Useful Links | Description
 --- | ---
@@ -258,3 +261,75 @@ const args = process.argv.slice(2);
 ```
 
 ## Output to the Command Line
+
+Node has a [global `console`](https://nodejs.org/api/console.html) instance that
+is similar to the [JavaScript console](https://developer.mozilla.org/en-US/docs/Web/API/Console)
+mechanism provided by web browsers.
+
+> Note: The global console object's methods are neither consistently synchronous
+> like the browser APIs they resemble, nor are they consistently asynchronous
+> like all other Node.js streams. See the [note on process I/O](https://nodejs.org/api/process.html#process_a_note_on_process_i_o)
+> for more information.
+
+### Formatting
+
+Like many programming languages, we can format our print statements:
+
+```js
+console.log('My name is %s, I was born in the %ds. Here\'s an object: %o', 'Andrew', 90, {hello: 'there'});
+```
+
+Flag | What it does
+--- | ---
+`%s` | format a variable as a string
+`%d` | format a variable as a number
+`%i` | format a variable as its integer part only
+`%o` | format a variable as an object
+
+It's also possible to colour the output by using [ANSI escape sequences](https://www.lihaoyi.com/post/BuildyourownCommandLinewithANSIescapecodes.html):
+
+```js
+console.log('\x1b[33m%s\x1b[0m', 'hi!');
+// prints 'hi' in yellow
+console.log('\u001b[31m%s', 'hi!');
+// prints 'hi' in red
+```
+
+> Note: a faster/easier way to do this is to use the [chalk](https://github.com/chalk/chalk) library
+
+### Debugging
+
+An important use of the `console` module is to print out the stack trace using
+`console.trace()`. If you're ever confused about how a function is called,
+putting `console.trace()` in the function can help by showing a trace of what
+lead to calling the function.
+
+Another important use of `console` is to time functions for performance analysis:
+
+```js
+const doSomething = () => console.log('test');
+const measureDoingSomething = () => {
+  console.time('doSomething()');
+  doSomething();
+  console.timeEnd('doSomething()');
+};
+measureDoingSomething();
+// doSomething(): 1.813ms
+```
+
+If you want to print an error, by using `console.error()`, information will be
+printed to `stderr` instead of `stdout`.
+
+### Other Uses
+
+There's an interesting method called `console.count(label)` that maintains a
+counter for how many times the same string has been printed with `.count()`:
+
+```js
+console.count('How many times?');
+// How many times?: 1
+console.count('How many times?');
+// How many times?: 2
+console.count('How many times?');
+// How many times?: 3
+```
