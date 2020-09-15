@@ -21,6 +21,8 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
   - [Other Uses](#other-uses)
 - [CommonJS Modules](#commonjs-modules)
   - [ECMAScript Modules](#ecmascript-modules)
+- [npm](#npm)
+<!-- - [The Event Loop](#the-event-loop) -->
 
 Useful Links | Description
 --- | ---
@@ -35,6 +37,10 @@ Useful Links | Description
 [ECMAScript Modules - Node](https://nodejs.org/api/esm.html) | Docs on ESM
 [nvm](https://github.com/nvm-sh/nvm) | Node Version Manager
 [ECMA-262 standard](https://www.ecma-international.org/publications/standards/Ecma-262.htm) | ECMAScript Language Specification
+[CLI Commands - NPM][npm-cli] | A list of CLI commands for `npm`
+[`package.json` - NPM][package-json] | Specifics of `npm`'s `package.json`
+[Semantic Versioning Syntax - NPM](https://docs.npmjs.com/misc/semver) | Making sense of semver syntax with package version numbers
+[npm semver calculator](https://semver.npmjs.com/) | A useful tool for precisely specifying versions
 
 ---
 
@@ -381,7 +387,7 @@ const privateString = 'I am a "private" string';
 exports.lotsOfStuff = {
   stuff1: 'stuff',
   stuff2: 'more stuff',
-  privateStuff: privateString  
+  privateStuff: privateString
 };
 ```
 
@@ -442,3 +448,22 @@ console.log(addTwo(4));
 ```
 
 > Read more about [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) and [export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) on MDN
+
+## npm
+
+`npm` stands for "Node Package Manager", and is the default package manager for Node.js.
+This package manager lets you install other developers' modules as dependencies
+in your project. This is a double-edged sword because although installing a package
+can help avoid "reinventing the wheel", your code is beholden to another author's
+security vulnerabilities and code cleanliness.
+
+The `npm` website has a [list of CLI commands][npm-cli]
+that are available, as well as a reference for [the `package.json`][package-json].
+The `package.json` file describes the Node.js project and which packages are
+needed as dependencies.
+
+<!-- Links -->
+[npm-cli]: https://docs.npmjs.com/cli-documentation/cli-commands
+[package-json]: https://docs.npmjs.com/files/package.json
+
+<!-- ## The Event Loop -->
