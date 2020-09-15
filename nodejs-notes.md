@@ -19,7 +19,8 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
   - [Formatting](#formatting)
   - [Debugging](#debugging)
   - [Other Uses](#other-uses)
-<!-- - [Modules](#modules) -->
+- [CommonJS Modules](#commonjs-modules)
+  - [ECMAScript Modules](#ecmascript-modules)
 
 Useful Links | Description
 --- | ---
@@ -360,4 +361,84 @@ console.count('How many times?');
 // How many times?: 3
 ```
 
-<!-- ## Modules -->
+## CommonJS Modules
+
+Node.js prefers to use [CommonJS](https://en.wikipedia.org/wiki/CommonJS) modules.
+Each file is treated as a separate module. For example, to import a module:
+
+```js
+const moduleFromOtherFile = require('./fileWithStuff'); // imports from fileWithStuff.js
+console.log('Here is some stuff below:');
+console.log(moduleFromOtherFile.lotsOfStuff);
+```
+
+In order to be able to import `moduleFromOtherFile`, we need to expose it:
+
+```js
+// fileWithStuff.js
+const privateString = 'I am a "private" string';
+
+exports.lotsOfStuff = {
+  stuff1: 'stuff',
+  stuff2: 'more stuff',
+  privateStuff: privateString  
+};
+```
+
+The module `moduleFromOtherFile` has exported the object `lotsOfStuff`. Object and
+functions are added to the root of a module by specifying additional properties
+on the special `exports` object.
+
+Variables local to the module will be private (_e.g._ `privateString`) because
+the module is [wrapped in a function](https://nodejs.org/api/modules.html#modules_the_module_wrapper)
+by Node.js.
+
+Another way of exporting modules is to assign the `module.exports` property a new value:
+
+```js
+// otherFileWithStuff.js
+const objectWithStuffInside = {
+  thing: 'stuff',
+  otherThing: 'fib'
+};
+
+module.exports = objectWithStuffInside; // exposes the object, thingFromOtherFile
+// or
+module.exports = {
+  thing: 'stuff',
+  otherThing: 'fib'
+};
+```
+
+Then when want to use the module from `otherFileWithStuff.js`:
+
+```js
+const stuff = require('./temp2');
+console.log(stuff);
+// { thing: 'stuff', otherThing: 'fib' }
+```
+
+### ECMAScript Modules
+
+With Node.js and CommonJS, we are used to using `require()` to include modules.
+ECMAScript modules are the official standard format to package JavaScript code
+for reuse. In this system, modules are defined using `import` and `export` statements:
+
+```js
+// addTwo.mjs
+function addTwo(num) {
+  return num + 2;
+}
+
+export { addTwo };
+```
+
+```js
+// app.mjs
+import { addTwo } from './addTwo.mjs';
+
+// Prints: 6
+console.log(addTwo(4));
+```
+
+> Read more about [import](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) and [export](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) on MDN
