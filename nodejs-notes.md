@@ -1,4 +1,4 @@
-# Nodejs.dev Learn Notes
+# Node.js
 
 Most of these notes came about after reading through the [Node.js learning site](https://nodejs.dev/learn).
 
