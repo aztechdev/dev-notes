@@ -22,25 +22,27 @@ Node.js is supported by the [OpenJS Foundation](https://openjsf.org/).
 - [CommonJS Modules](#commonjs-modules)
   - [ECMAScript Modules](#ecmascript-modules)
 - [npm](#npm)
-<!-- - [The Event Loop](#the-event-loop) -->
+- [The Event Loop](#the-event-loop)
 
 Useful Links | Description
 --- | ---
 [Node.js API Documentation](https://nodejs.org/api/) | Index of Node.js API docs
 [Node.js Globals](https://nodejs.org/api/globals.html) | Always available to Node.js applications without using `require()`
 [JS Global Objects - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects) | Standard built-in objects in the global scope
+[Concurrency model and the event loop - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) | An explanation of JavaScript's concurrency model (which is based off an event loop)
 [Web APIs - MDN](https://developer.mozilla.org/en-US/docs/Web/API) | List of Web APIs (_e.g._ DOM, History API, Storage, WebGL)
 [HTTP Response Code - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) | Docs on status codes on MDN
 [httpstatuses.com](https://httpstatuses.com/) | Another response code index
 [HTTP Headers - MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) | Reference list of HTTP headers
 [MIME/Media Types - IANA][mime-types] | List of valid media types for a resource
 [ECMAScript Modules - Node](https://nodejs.org/api/esm.html) | Docs on ESM
-[nvm](https://github.com/nvm-sh/nvm) | Node Version Manager
 [ECMA-262 standard](https://www.ecma-international.org/publications/standards/Ecma-262.htm) | ECMAScript Language Specification
+[nvm](https://github.com/nvm-sh/nvm) | Node Version Manager
 [CLI Commands - NPM][npm-cli] | A list of CLI commands for `npm`
 [`package.json` - NPM][package-json] | Specifics of `npm`'s `package.json`
 [Semantic Versioning Syntax - NPM](https://docs.npmjs.com/misc/semver) | Making sense of semver syntax with package version numbers
 [npm semver calculator](https://semver.npmjs.com/) | A useful tool for precisely specifying versions
+[npx](https://www.npmjs.com/package/npx) | `npx` lets you execute npm package binaries
 
 ---
 
@@ -466,4 +468,61 @@ needed as dependencies.
 [npm-cli]: https://docs.npmjs.com/cli-documentation/cli-commands
 [package-json]: https://docs.npmjs.com/files/package.json
 
-<!-- ## The Event Loop -->
+## The Event Loop
+
+JavaScript's [concurrency model](https://en.wikipedia.org/wiki/Concurrency_(computer_science))
+is based off an event loop. Understanding this helps us see how Node.js can be
+asynchronous and have non-blocking I/O.
+
+The Event Loop can be thought of simply in pseudocode:
+
+```js
+while (queue.waitForMessage()) {
+  queue.processNextMessage()
+}
+```
+
+### Runtime Concepts
+
+There are three data structures that are used to understand how JavaScript runs:
+
+- **Stack:** function calls form a _stack_ of frames. A frame contains the function's
+arguments and local variables. For example, `methodA()` (where `methodA` calls `methodB`)
+the first frame contains `methodA`'s args and variables, the second frame is `methodB`
+its args/vars. When `methodB` returns/evaluates, it's popped off the stack, leaving
+`methodA` left on the stack. When `methodA` returns, the stack is empty.
+- **Heap:** objects are allocated in _heap_, a region of memory.
+- **Queue:** a _queue_ contains messages, each message having an associated function
+which is called in order to "handle" the message. Calling a new function creates
+a new stack frame for that function's use. **Once the stack is empty, the next
+message in the queue is processed.**
+
+Each message is processed completely before another message is processed (_i.e._ "run-to-completion").
+
+A downside of this model is that if a message takes too long to complete,
+the web application is unable to process user interactions like click or scroll.
+The browser mitigates this with the _"a script is taking too long to run"_ dialog.
+A good practice to follow is to make message processing short and if possible
+cut down one message into several messages.
+
+It can be possible to have multiple runtimes communicating with each other. A
+[web worker](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
+or a cross-origin iframe has its own stack, heap, and message queue.
+Two distinct runtimes can only communicate through sending messages via the
+[`window.postMessage` method](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
+This method adds a message to the other runtime if the latter listens to message events.
+
+### The Illusion of `setTimeout`
+
+Messages are added to the queue anytime an event occurs with an event listener
+attached to it. If there is no listener, the event is lost. For example, a click
+on an element with a click event handler will add a message to the queue.
+
+`setTimeout` is called with 2 arguments: a message to add to the queue, and a
+time value. The time value represents the (minimum) delay before the message is
+added to the queue. If there is no other message in the queue, and the stack is
+empty, the message is processed right after the delay.
+
+However, if there _are_ messages, the `setTimeout` message will have to wait for
+other messages to be processed. For this reason, the second argument indicates
+a minimum time, not a guaranteed time.
