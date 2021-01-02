@@ -512,6 +512,20 @@ Two distinct runtimes can only communicate through sending messages via the
 [`window.postMessage` method](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
 This method adds a message to the other runtime if the latter listens to message events.
 
+### `process.nextTick`
+
+Every time the event loop "completes", we call it a tick. "Completion" of the event
+loop would indicate the message queue is empty, because the call stack is empty
+and all messages have been processed to completion.
+
+The `.nextTick()` method on the [`process` core module](https://nodejs.org/api/process.html)
+is outside of the ordinary cycle of the event loop. `process.nextTick(callback)`
+adds a provided callback function to be invoked before the next _tick_.
+
+Further information:
+
+- [The Node.js Event Loop, Timers, and process.nextTick()](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/)
+
 ### The Illusion of `setTimeout`
 
 Messages are added to the queue anytime an event occurs with an event listener
