@@ -540,3 +540,6 @@ empty, the message is processed right after the delay.
 However, if there _are_ messages, the `setTimeout` message will have to wait for
 other messages to be processed. For this reason, the second argument indicates
 a minimum time, not a guaranteed time.
+
+
+<!-- https://www.nodejsdesignpatterns.com/blog/node-js-race-conditions/ -->

@@ -1,2 +1,3 @@
 *.pdf
 temp.js
+.DS_Store
