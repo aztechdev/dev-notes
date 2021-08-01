@@ -18,6 +18,8 @@ These are notes taken from the v1.0.1 edition of the book, printed in November 2
   - [Chapter 3: Working Code Isn't Enough (Strategic vs. Tactical Programming)](#chapter-3-working-code-isnt-enough-strategic-vs-tactical-programming)
     - [Tactical programming](#tactical-programming)
     - [Strategic programming](#strategic-programming)
+      - [How much to invest?](#how-much-to-invest)
+  - [Chapter 4: Modules Should Be Deep](#chapter-4-modules-should-be-deep)
 
 ## Preface
 
@@ -194,3 +196,53 @@ Refactoring will help in the long run, but a tactical approach has you making qu
 > Almost every software development organization has at least one developer who takes tactical programming to the extreme: a _tactical tornado_. The tactical tornado is a prolific programmer woh pumps out code far faster than others but works in a totally tactical fashion. When it comes to implementing a quick feature, nobody gets it done faster than the tactical tornado. In some organizations, management treats tactical tornadoes as heroes. However, tactical tornadoes leave behind a wake of destruction. They are rarely considered heroes by the engineers who must work with their code in the future. Typically, other engineers must clean up the messes left behind by the tactical tornado, which makes it appear that those engineers (who are the real heroes) are making slower progress than the tactical tornado.
 
 ### Strategic programming
+
+> **_Working code isn't enough._**
+>
+> **_Your primary goal must be to produce a great design, which also happens to work._**
+
+It is not acceptable to introduce unnecessary complexities in order to finish your current task faster.
+
+> **_The most important thing is the long-term structure of the system._**
+
+Most of the code in any system is written by extending the existing code base. The most important job as a developer is to facilitate those future extensions.
+
+Strategic programming requires an investment mindset. Invest time to improve the system design, rather than taking the fastest path to "finish".
+
+For example:
+
+- take time to find a simple design for each new class
+- don't implement the first idea that comes to mind
+- try a couple of alternative designs and pick the cleanest one
+- try to imagine a few ways in which the system might need to be changed in the future and make sure that will be easy with the design
+- writing good documentation is a good proactive investment
+
+If you are programming strategically, you will be continually making small improvements to the system design.
+
+#### How much to invest?
+
+A huge up-front investment, like designing the entire system, won't be effective. This is the waterfall method, and we know it doesn't work.
+
+The best approach is to make small investments on a continual basis.
+
+**John suggests spending ~10-20% of development time on investments.**
+
+The project will take ~10-20% longer than the tactical approach, but you will have better software design. The simplified design will speed up development later on.
+
+Conversely, if you program tactically, you will finish the project ~10-20% faster, but development speed will slow as complexity accumulates.
+
+![Tactical vs. Strategic programming over time](./documents/tactical_strategic_over_time.png)
+
+Many startups will try to rationalize the tactical approach by hiring extra engineers to clean up the mess after the startup is successful.
+**Once a code base turns to spaghetti, it is nearly impossible to fix.** Startups following the tactical approach will incur high development costs for the life of the product.
+
+The best engineers care deeply about design. If the code base is a mess then you will likely continue to recruit mediocre engineers and your system structure will continue to degrade.
+
+> **_It's a lot more fun to work in a company that cares about software design and has a clean code base._**
+
+There will always be a "time crunch", it will be tempting to put off and delay design improvements until after the crunch, but there will always be another one. If you continue to delay design improvements, the development will slowly devolve into a tactical approach.
+
+The most effective approach is one where every engineer makes continuous small investments in good design.
+
+## Chapter 4: Modules Should Be Deep
+
