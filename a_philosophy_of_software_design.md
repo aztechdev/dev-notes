@@ -17,6 +17,7 @@ These are notes taken from the v1.0.1 edition of the book, printed in November 2
     - [Causes of complexity](#causes-of-complexity)
   - [Chapter 3: Working Code Isn't Enough (Strategic vs. Tactical Programming)](#chapter-3-working-code-isnt-enough-strategic-vs-tactical-programming)
     - [Tactical programming](#tactical-programming)
+    - [Strategic programming](#strategic-programming)
 
 ## Preface
 
@@ -105,6 +106,7 @@ If a software system is easy to understand and modify, then it is simple.
 In a simple system, larger improvements can be implemented with less effort.
 
 Complexity is determined by what code is modified more often:
+
 ![Ousterhout's Complexity Equation](./documents/complexity_equation_ousterhout.png)
 
 Overall complexity of a system (**_C_**) is determined by the complexity of each part **_p_** (**_c<sub>p</sub>_**) weighted by the fraction of time developers spend working on that part (**__t<sub>p</sub>__**).
@@ -156,6 +158,8 @@ Oftentimes you won't find out about an issue until bugs appear after your change
 
 ### Causes of complexity
 
+> Complexity is incremental.
+
 Complexity comes from an accumulation of two things:
 
 1. Dependencies
@@ -180,3 +184,13 @@ Many organizations encourage a tactical mindset: "focus on getting features work
 If you want good design, you need a more strategic approach where you invest time to produce clean designs and fix problems. This is cheaper over the long run.
 
 ### Tactical programming
+
+> Tactical programming makes it nearly impossible to produce a good system design.
+
+Tactical programming is short-sighted, you're trying to finish a task as quickly as possible. This is how systems become complicated, rationalizing that a bit of complexity will be fine if it "gets something working".
+
+Refactoring will help in the long run, but a tactical approach has you making quick patches to work around problems because of the growing complexity (_i.e. "refactoring will slow down the current task"_).
+
+> Almost every software development organization has at least one developer who takes tactical programming to the extreme: a _tactical tornado_. The tactical tornado is a prolific programmer woh pumps out code far faster than others but works in a totally tactical fashion. When it comes to implementing a quick feature, nobody gets it done faster than the tactical tornado. In some organizations, management treats tactical tornadoes as heroes. However, tactical tornadoes leave behind a wake of destruction. They are rarely considered heroes by the engineers who must work with their code in the future. Typically, other engineers must clean up the messes left behind by the tactical tornado, which makes it appear that those engineers (who are the real heroes) are making slower progress than the tactical tornado.
+
+### Strategic programming
