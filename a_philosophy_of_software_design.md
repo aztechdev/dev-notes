@@ -5,6 +5,7 @@
 These are notes taken from the v1.0.1 edition of the book, printed in November 2018.
 
 - [A Philosophy of Software Design](#a-philosophy-of-software-design)
+  - [Summary of Design Principles](#summary-of-design-principles)
   - [Preface](#preface)
   - [Chapter 1: Introduction (It's All About Complexity)](#chapter-1-introduction-its-all-about-complexity)
     - [The Waterfall Method](#the-waterfall-method)
@@ -20,6 +21,24 @@ These are notes taken from the v1.0.1 edition of the book, printed in November 2
     - [Strategic programming](#strategic-programming)
       - [How much to invest?](#how-much-to-invest)
   - [Chapter 4: Modules Should Be Deep](#chapter-4-modules-should-be-deep)
+
+## Summary of Design Principles
+
+1. Complexity is incremental; you have to sweat the small stuff.
+2. Working code isn't enough.
+3. Make continual investments to improve system design.
+4. Modules should be deep.
+5. Interfaces should be designed to make the most common usage as simple as possible.
+6. It's more important for a module to have a simple interface than a simple implementation.
+7. General-purpose modules are deeper.
+8. Separate general-purpose and special-purpose code.
+9. Different layers should have different abstractions.
+10. Pull complexity downward.
+11. Define errors (and special cases) out of existence.
+12. Design it twice.
+13. Comments should describe things that are not obvious from the code.
+14. Software should be designed for ease of reading, not ease of writing.
+15. The increments of software development should be abstractions, not features.
 
 ## Preface
 
@@ -246,3 +265,29 @@ The most effective approach is one where every engineer makes continuous small i
 
 ## Chapter 4: Modules Should Be Deep
 
+We should aim to design systems so that developers only need to face a fraction of the overall complexity at any given time (_i.e._ modular design).
+
+**Modular design** decomposes a software system into a collection of _modules_ that are relatively independent.
+
+Modules could be:
+
+- Classes
+- Methods or functions within a class
+- Subsystems
+- Services
+
+The goal of modular design is to minimize the dependencies between modules.
+
+Each module is made up of two parts:
+
+1. An interface (_what_ a module does)
+   - consists of everything that a developer working in a different module must know in order to use the given module.
+2. An implementation (_how_ a module does what the interface describes)
+   - consists of the code that carries out the promises made by the interface.
+
+A developer should not need to understand the implementations of modules other than the one they are working on. They will obviously need to know the interfaces [of the given module + dependencies].
+
+The best modules are those whose interfaces are much simpler than their implementations. This provides two advantages:
+
+1. A simple interface minimizes the complexity that a module imposes on the rest of the system.
+2. If a module is modified in a way that does not change its interface, then no other module will be affected by the modification.
