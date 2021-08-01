@@ -10,6 +10,13 @@ These are notes taken from the v1.0.1 edition of the book, printed in November 2
     - [The Waterfall Method](#the-waterfall-method)
     - [Agile Development](#agile-development)
   - [Chapter 2: The Nature of Complexity](#chapter-2-the-nature-of-complexity)
+    - [Manifestations of complexity](#manifestations-of-complexity)
+      - [Change amplification](#change-amplification)
+      - [Cognitive load](#cognitive-load)
+      - [Unknown unknowns](#unknown-unknowns)
+    - [Causes of complexity](#causes-of-complexity)
+  - [Chapter 3: Working Code Isn't Enough (Strategic vs. Tactical Programming)](#chapter-3-working-code-isnt-enough-strategic-vs-tactical-programming)
+    - [Tactical programming](#tactical-programming)
 
 ## Preface
 
@@ -92,4 +99,84 @@ Complexity can take many forms:
 - it might be difficult to fix one bug without introducing another
 
 If a software system is hard to understand and modify, then it is complicated.
-if a software system is easy to understand and modify, then it is simple.
+In a complex system, it takes a lot of work to implement small improvements.
+
+If a software system is easy to understand and modify, then it is simple.
+In a simple system, larger improvements can be implemented with less effort.
+
+Complexity is determined by what code is modified more often:
+![Ousterhout's Complexity Equation](./documents/complexity_equation_ousterhout.png)
+
+Overall complexity of a system (**_C_**) is determined by the complexity of each part **_p_** (**_c<sub>p</sub>_**) weighted by the fraction of time developers spend working on that part (**__t<sub>p</sub>__**).
+
+If there is code that is very complex, but is isolated and rarely modified, then that is a win.
+
+> Complexity is more apparent to readers than writers.
+> If you write code that seems simple to you, but others find it complex, then it is complex.
+
+We want to not only create code that we can work with easily, but also make code that others can work with easily.
+
+### Manifestations of complexity
+
+Complexity manifests itself in three general ways:
+
+1. Change amplification
+2. Cognitive load
+3. Unknown unknowns
+
+#### Change amplification
+
+Change amplification occurs when what seems to be a simple change instead requires code modifications in many different places.
+
+An example would be an old website requiring you to set the background color on each page. If you have a hundred pages you have to make a hundred changes. Instead, in the modern web we would assign a colour to a variable, and use that variable. Now to change the colour for all the backgrounds you change the colour assigned to the variable.
+
+#### Cognitive load
+
+Cognitive load refers to how much a developer needs to know in order to complete a task. This means more time spent learning rather than coding, and there is a possibility that bugs will occur because of incomplete information.
+
+For example, cognitive load can arise from:
+
+- APIs with many methods
+- Global variables
+- Inconsistencies
+- Dependencies between modules
+
+It is wrong to assume that `complexity = lines of code` and that the shorter solution must be simpler. This is not true if those few lines do not tell the developer what is really going on or if they have written the code incorrectly.
+
+> **Sometimes an approach that requires more lines of code is actually simpler, because it reduces cognitive load.**
+
+#### Unknown unknowns
+
+> Of the three manifestations of complexity, unknown unknowns are the worst.
+
+It is not obvious which pieces of code must be modified to complete a task, or what information a developer needs to implement the solution successfully.
+Oftentimes you won't find out about an issue until bugs appear after your change. A change may depend on a subtle design decision that was never documented.
+
+> One of the most important goals of good design is for a system to be _obvious_. (Chapter 18 discusses this further)
+
+### Causes of complexity
+
+Complexity comes from an accumulation of two things:
+
+1. Dependencies
+   - lead to change amplification and high cognitive load
+2. Obscurity
+   - creates unknown unknowns and high cognitive load
+
+A **_dependency_** exists when a piece of code cannot be understood and modified in isolation. This dependent code relates to other code, and this other code must be considered/modified if the dependent code is changed.
+
+For example, the signature of a method creates a dependency between the method implementation and the code invoking it. If a new parameter is added to a method, all of the invocation of the method must be modified to specify the new parameter.
+
+Dependencies are not inherently bad, but we want to reduce the number of dependencies, and make them as simple and obvious as possible.
+
+**_Obscurity_** occurs because of inadequate documentation (Chapter 13 talks about this more). However, if a system has an obvious design, it will need less documentation. The need for extensive documentation is often a red flag that the design isn't quite right.
+
+> The best way to reduce obscurity is by simplifying the system design.
+
+## Chapter 3: Working Code Isn't Enough (Strategic vs. Tactical Programming)
+
+Many organizations encourage a tactical mindset: "focus on getting features working as quickly as possible".
+
+If you want good design, you need a more strategic approach where you invest time to produce clean designs and fix problems. This is cheaper over the long run.
+
+### Tactical programming
