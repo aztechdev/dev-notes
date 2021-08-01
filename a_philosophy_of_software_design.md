@@ -81,3 +81,15 @@ One of the best ways to improve your design skills is to learn to recognize red 
 ## Chapter 2: The Nature of Complexity
 
 Recognizing complexity allows you to identify problems before you invest a lot of effort in them, and it allows you to make good choices among alternatives.
+
+> **Complexity is anything related to the structure of a software system that makes it hard to understand and modify the system.**
+
+Complexity can take many forms:
+
+- it might be hard to understand how a piece of code works
+- it might take a lot of effort to implement a small improvement
+- it might not be clear which parts of the system must be modified to make the improvement
+- it might be difficult to fix one bug without introducing another
+
+If a software system is hard to understand and modify, then it is complicated.
+if a software system is easy to understand and modify, then it is simple.
